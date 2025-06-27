@@ -12,6 +12,22 @@ function ProductDetail({ addToCart, removeFromCart, getQuantityOfItemInCart }) {
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState(null);
 
+  useEffect(() => {
+    const fetchProduct = async () => {
+      setIsFetching(true);
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_DB_BASE_URL}products/${productId}`);
+        setProduct(res.data);
+      } catch (err) {
+        setError("Could not fetch the product");
+      } 
+
+      setIsFetching(false);
+    
+    };
+    fetchProduct();
+  }, []);
+
 
   if (error) {
     return <NotFound />;

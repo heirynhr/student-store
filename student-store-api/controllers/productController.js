@@ -7,14 +7,22 @@ const prisma = require("../src/db/db");
 //GET - THE ENTIRE PRODUCT LIST RUN DOWN  -> /products
 exports.getAll = async (req, res) => {
     const {category, sort} = req.query
+    const filters = {}
+    if (category) {
+        filters.category =  {
+            equals: category,
+            mode : "insensitive",
+        };
+    }
+    let orderFilter;
+    if (sort === "price" || sort === "name"){
+        orderFilter= {
+            [sort]: "asc",
+        };
+    }
     const productList = await prisma.product.findMany({
-        where: {
-            category: {
-                contains: category,
-                mode: 'insensitive',
-            }
-            
-        }
+        where: filters,
+        orderBy: orderFilter,
     });
     res.json(productList);
 };
@@ -63,3 +71,5 @@ exports.remove = async (req, res) => {
     await prisma.product.delete({ where: { id } });
     res.status(204).end();
 };
+
+

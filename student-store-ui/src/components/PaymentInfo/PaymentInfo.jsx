@@ -1,6 +1,8 @@
 import "./PaymentInfo.css"
 
 export default function PaymentInfo({ userInfo, setUserInfo, handleOnCheckout, isCheckingOut, error }) {
+  console.log(userInfo);
+
   return (
     <div className="PaymentInfo">
       <h3 className="">
@@ -29,7 +31,7 @@ export default function PaymentInfo({ userInfo, setUserInfo, handleOnCheckout, i
             className="input"
             type="email"
             placeholder="Email"
-            value={userInfo.id}
+            value={userInfo.email}
             onChange={(e) => setUserInfo((u) => ({ ...u, email: e.target.value }))}
           />
         </div>

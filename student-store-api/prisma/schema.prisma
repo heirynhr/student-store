@@ -15,9 +15,31 @@ datasource db {
 
 model Product {
   id Int @id @default(autoincrement())
-  "name String @unique
+  name String 
   description String?
   price Float
   image_url String
-  category String"
+  category String
+  orderItems OrderItem[]
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+  customer String
+  total Float
+  status String
+  createdAt DateTime @default(now())
+  orderItems OrderItem[]
+}
+
+model OrderItem {
+  id Int @id @default(autoincrement())
+
+  orderId Int
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId Int
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  quantity Int
+  price Float
 }

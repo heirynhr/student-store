@@ -6,6 +6,8 @@ import "./ShoppingCart.css";
 
 
 const CartTable = ({ products, cart }) => {
+  console.log(cart);
+  
   const productMapping = products.reduce((acc, item) => {
     acc[item.id] = item; 
     return acc;
